@@ -78,31 +78,31 @@ namespace StarChart.Controllers
             _context.Add(celestialObject);
             _context.SaveChanges();
 
-            return CreatedAtRoute("GetById", new { celestialObject.Id });
+            return CreatedAtRoute("GetById", new { id = celestialObject.Id }, celestialObject);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id)
+        public IActionResult Update(int id, CelestialObject celestialObject)
         {
-            var celestialObject = _context.CelestialObjects.FirstOrDefault(co => co.Id == id);
+           var existingCelestialObject = _context.CelestialObjects.FirstOrDefault(co => co.Id == id);
 
             if (celestialObject == null)
             {
                 return NotFound();
             }
 
-            celestialObject.Name = celestialObject.Name;
-            celestialObject.OrbitedObjectId = celestialObject.OrbitedObjectId;
-            celestialObject.OrbitalPeriod = celestialObject.OrbitalPeriod;
+            existingCelestialObject.Name = celestialObject.Name;
+            existingCelestialObject.OrbitedObjectId = celestialObject.OrbitedObjectId;
+            existingCelestialObject.OrbitalPeriod = celestialObject.OrbitalPeriod;
 
-            _context.Update(celestialObject);
+            _context.Update(existingCelestialObject);
             _context.SaveChanges();
 
             return NoContent();
 
         }
 
-        [HttpPatch("{id}/name")]
+        [HttpPatch("{id}/{name}")]
         public IActionResult RenameObject(int id, string name)
         {
             var celestialObject = _context.CelestialObjects.FirstOrDefault(co => co.Id == id);
