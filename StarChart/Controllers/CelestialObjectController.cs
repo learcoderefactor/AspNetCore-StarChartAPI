@@ -86,7 +86,7 @@ namespace StarChart.Controllers
         {
            var existingCelestialObject = _context.CelestialObjects.FirstOrDefault(co => co.Id == id);
 
-            if (celestialObject == null)
+            if (existingCelestialObject == null)
             {
                 return NotFound();
             }
